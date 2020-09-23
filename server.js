@@ -81,12 +81,32 @@ function runSearch() {
         break;
       }
 
-  })
-  .catch(error => {
-    if(error.isTtyError) {
+  });
+  // .catch(error => {
+    // if(error.isTtyError) {
       // Prompt couldn't be rendered in the current environment
-    } else {
+    // } else {
       // Something else when wrong
-    }
+    // }
+  // });
+}
+
+function employeeView() {
+  inquirer
+  .prompt({
+    type: "input",
+    name: "employeeView",
+    message: "Search for an employee by their last name"
+  })
+  .then(function (answers) {
+    var query = "SELECT first_name, last_name, id FROM employee_db.employee WHERE ?";
+    connection.query(query, { last_name: answers.employeeView}, function (err, res) {
+      for (var i=0; i<res.length; i++) {
+        console.log("First name: " +res[i].first_name + " || Last Name: " + res[i].last_name + " || Id: " + res[i].id);
+
+      }
+      runSearch();
+    });
   });
 }
+
