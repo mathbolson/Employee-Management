@@ -44,7 +44,7 @@ function runSearch() {
         employeeView();
         break;
 
-        case "view all departments":
+        case "view all employees by department":
           departmentView();
           break;
 
@@ -76,6 +76,10 @@ function runSearch() {
         managerRemove();
         break;
 
+        case "Update Employee Role":
+          employeeUpdate();
+          break;
+
       case "exit":
         connection.end();
         break;
@@ -92,21 +96,33 @@ function runSearch() {
 }
 
 function employeeView() {
-  inquirer
-  .prompt({
-    type: "input",
-    name: "employeeView",
-    message: "Search for an employee by their last name"
-  })
-  .then(function (answers) {
-    var query = "SELECT first_name, last_name, id FROM employee_db.employee WHERE ?";
-    connection.query(query, { last_name: answers.employeeView}, function (err, res) {
-      for (var i=0; i<res.length; i++) {
-        console.log("First name: " +res[i].first_name + " || Last Name: " + res[i].last_name + " || Id: " + res[i].id);
-
-      }
+    var query = "SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager FROM employee LEFT JOIN role on employee.role_id = role.id LEFT JOIN department on role.department_id = department.id LEFT JOIN employee manager on manager.id = employee.manager_id;";
+    connection.query(query, function (err, res) {
+      if(err) return err;
+      console.log("\n");
+      console.table(res);
       runSearch();
     });
-  });
+  
 }
 
+// function departmentView(){
+// inquirer
+//   .prompt({
+//     type: "list",
+//     name: "departmentView",
+//     message: "Choose a department",
+//     choices: [
+//       "Sales", "Engineering", "Finance", "Legal",
+//     ] 
+//   })
+//   .then(function (answers) {
+//     var query = "SELECT name FROM employee_db.department ";
+//     connection.query(query, function(err, res) {
+//       for (var i=0; i< res.length; i++) {
+//         console.log(res[i].name);
+//         runSearch();
+//       }
+//     })
+//   })
+// }
