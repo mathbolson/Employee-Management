@@ -25,3 +25,4 @@ role_id INT (30) NULL,
 manager_id INT (30) NULL,
 PRIMARY KEY (id)
 );
+
