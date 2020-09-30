@@ -14,6 +14,11 @@
   
   ## Description:
   This is a command line interface program that assists the user in keeping track of their employees. I built this project to practice my skills in MySQL and Node.js, but this is an open source project that can be utilized by anyone who needs an easy way to manage their employee's. The packages I used to build this project were mysql, console.table, and inquirer. 
+  
+## Demo
+
+* [Employee Tracker](https://youtu.be/V1yqmsdMVzw)
+
   ## Installation:
   Download and unzip the file from this github. Make sure your MAMP Mysql server is running on PORT 3306. Run "npm install" to install the dependecies.
   ## Usage:
